@@ -1,0 +1,81 @@
+body{
+    font-family: 'Russo One', sans-serif;
+}
+.registration {
+    background-image: url(../images/registration-img.png);
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.registration__img {
+}
+.registration__title{
+    font-family: 'Russo One', sans-serif;
+    font-size: 64px;
+    line-height: 77px;
+    color: #98AF5D;
+    margin-bottom: 47px;
+    text-align: center;
+    margin-right:50px;
+}
+.registration__item-1 {
+    max-width: 641px;
+}
+
+.registration__form {
+    border: 8px solid #98AF5D;
+    border-radius: 25px;
+    max-width: 900px;
+    padding-left: 82px;
+    padding-top: 30px;
+    padding-bottom: 100px;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 91px;
+    right: 0;
+    padding-right: 25px;
+}
+.registration__label {
+    font-size: 48px;
+    line-height: 58px;
+    color: #92AA4A;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.registration__label-check{
+    font-size: 36px;
+    color: #98AF5D;
+    max-width: 100px;
+}
+.registration__checkbox{
+    height: 50px;
+    width: 50px;
+    margin-left: 100px;
+    margin-bottom: 30px;
+}
+.registration__control {
+    font-size: 48px;
+    line-height: 58px;
+    color: #92AA4A;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: transparent;
+    border-bottom: 2px solid #000;
+    margin-bottom: 30px;
+    
+}
+.registration__control::placeholder{
+    font-size: 48px;
+    line-height: 58px;
+    color: #92AA4A;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: transparent;
+}
+
+.registration__text{
+    font-size: 36px;
+    line-height: 43px;
+    color: #98AF5D;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
+}

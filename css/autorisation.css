@@ -1,0 +1,16 @@
+.registration__title{
+    margin-right:50px;
+}
+.registration__text-1{
+    padding: 20px;
+    background-color: #98AF5D;
+    display: block;
+    color: #000000;
+    text-align: center;
+    font-size: 36px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 606px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+}

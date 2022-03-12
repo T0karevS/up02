@@ -1,0 +1,47 @@
+.video {
+    margin-left: 132px;
+
+}
+.video__item {
+    margin-top: 44px;
+}
+.video__title {
+    font-family: 'Russo One', sans-serif;
+    font-size: 72px;
+    line-height: 87px;
+    color: #000000;
+}
+.video__like-item {
+    display: flex;
+}
+.video__text {
+    font-size: 72px;
+    line-height: 87px;
+    color: #000000;
+    position: relative;
+    margin-right: 100px;
+    margin-bottom: 116px;
+}
+.video__text::after{
+    content: '';
+    position: absolute;
+    background-image: url(/images/like.png);
+    height: 70px;
+    width: 70px;
+
+}
+.video__text:last-child::after{
+    content: '';
+    position: absolute;
+    background-image: url(/images/dislike.png);
+    height: 70px;
+    width: 70px;
+    top: 5px;
+   
+}
+.video__comments {
+    height: 182px;
+    background-color: #fff;
+    border-radius: 50px;
+    
+}
