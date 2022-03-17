@@ -1,22 +1,16 @@
 <?php
 session_start();
-if($_SESSION['user']['status']!='S' && $_SESSION['user']['nickname']!='admin')
-        {            
-            header('location: ../index.php');
-        }
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Russo+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/vieopage.css">
     <title>Document</title>
 </head>
 <body>
@@ -58,43 +52,61 @@ if($_SESSION['user']['status']!='S' && $_SESSION['user']['nickname']!='admin')
                             ?>
                     </ul>
                 </sidebar>
-<form method="post" class="form" enctype="multipart/form-data">
-    <div class="video__adm">
-        <?php   
-        require_once 'connect/loadvideo.php';
-            $videos = getVideo();
-                     
-            foreach ($videos as $video ):
-        ?>            
-            <div class="search__item">   
-            <?php 
-            ?>     
-            <button class="button__video" type="submit" ><h2 class="search__text"><?= $video['title']?></h2></a>
+    <?php
+     require_once 'connect/loadvideo.php';
+     $videos = getVideo3();
+    foreach (array_reverse($videos) as $video ):
+    ?>
+    <div class="videopage__inner">
+    <div class="search__item">
+            <a href="videopage.php"><h2 class="search__text"><?= $video['title']?></h2></a>
             <p class="search__text2"><?= $video['description'] ?></p>
-            <video controls="controls" src="<?= $video['video']?>" width="1280" height="720"></video><br>
-            <button type="submit" class="button1" name="<?= $video['id']; ?>">Забанить видео</button>
-            <button type="submit" class="button1" name="<?=  'a'.$video['id']; ?>">Выложить видео</button>
-            <?php 
-            $id=$video['id'];
-            $id2='a'.$id;
-            if( isset($_POST[ $id ]) )
-            {
-                $id=$video['id'];
-                require_once 'connect/ban.php';
-            }  
-            if( isset($_POST[ $id2 ]) )
-            {
-                $id=$video['id'];
-                require_once 'connect/ban2.php';
-            }  
-            ?>
-            </div>
+            <video controls="controls" src="<?= $video['video']?>" width="1280" height="720"></video>
+    </div>
+
         <?php
             endforeach;
         ?>
+        <form  id="form_data" method="post" enctype="multipart/form-data">
+            <textarea class="videopage__textarea" name="content" required placeholder="Ваш комментарий"></textarea><br>
+            <button type="submit" class="knopka">Отправить</button>
+        </form>   
+
+        <?php
+        $author = $_SESSION['nickname'];
+        $content = $_POST['content'];
+        
+        function addPosts($author, $content, $idvid)
+        {
+            $pdo = new PDO("mysql:host = localhost;dbname=lang", "root", "root");
+            $sql = "INSERT INTO `comment` (`author`, `content`, `idvid`) VALUE (:author, :content, :idvid)";
+            $statement = $pdo->prepare($sql);
+            $statement->execute(['author' => $_SESSION['user']['nickname'], 'content' => $_POST['content'], 'idvid' => $_GET['id']]);
+        
+        }
+        addPosts($_SESSION['nickname'],$_POST['content'], $_GET['id']);
+        function getPost()
+        {
+            $idvid = $_GET['id'];
+            $pdo = new PDO("mysql:host = localhost;dbname=lang", "root", "root");
+            $statement = $pdo->prepare("SELECT * FROM comment where `idvid` = $idvid ");
+            $statement->execute();
+            $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $posts;
+        }
+            $posts = getPost();
+            foreach (array_reverse($posts) as $post ):
+        ?>
+        <div class="comment">
+        <p class ="comment__text"><?= $post['author'] ?></p>
+        <p class ="comment__text-1"><?= $post['content'] ?></p>
+        </div>
+<?php
+endforeach;
+?>
     </div>
-</form>
-        <script>
+
+<script>
         if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
         }

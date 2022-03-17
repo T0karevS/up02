@@ -20,11 +20,6 @@ else
         "status"=>$user['status']
     ];
     header('location: ../index.php');
+    var_dump($user);
 }
 ?>
-<pre>
-    <?php
-    print_r($check_user);
-    print_r($user);
-    ?>
-</pre>

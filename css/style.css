@@ -242,6 +242,7 @@ a{
 }
 .search__item {
   margin-bottom: 75px;
+  margin-left: 20px;
 }
 .search__text {
   font-family: 'Russo One', sans-serif;
@@ -295,4 +296,18 @@ a{
 .video__adm
 {
   margin-left: 50px;
+}
+.button__video
+{
+  text-align: left;
+  background: none;
+  width: 100%;
+}
+.button1
+{
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: white;
+  font-family: 'Russo One', sans-serif;
+  border: 1px solid black;
 }

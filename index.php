@@ -14,8 +14,7 @@ session_start();
     <title>Document</title>
 </head>
 <body>
-    
-    <body>
+
     <div class="wrapper">
         <header class="header">
             <a href="index.php" class="logo">
@@ -25,7 +24,7 @@ session_start();
                 <input type="text" class="header__search">
                 <button class="header__btn">Поиск</button>
             </div>
-            <a href="registration.php" class="header__registration">
+            <a href="mypage.php" class="header__registration">
                 <img src="images/avatar.svg" alt="" class="header__registration">
             </a>
         </header>
@@ -33,7 +32,7 @@ session_start();
             <div class="main__inner">
                 <sidebar class="sidebar">
                     <ul class="sidebar__list">
-                        <li class="sidebar__list-item"><a href="video.html" class="sidebar__list-link">Главная</a></li>
+                        <li class="sidebar__list-item"><a href="index.php" class="sidebar__list-link">Главная</a></li>
                         <li class="sidebar__list-item"><a href="upload.php" class="sidebar__list-link">Загрузить видео</a></li>
                     </ul>
                     <ul class="sidebar__list">
@@ -42,9 +41,7 @@ session_start();
                         if(isset($_SESSION['user']))
                         {
                         echo '<li class="sidebar__list-item"><a href="connect/logout.php" class="sidebar__list-link"> Выход</a></li>';
-                            
-                            
-                            if( $_SESSION['user']['status']=1)
+                            if($_SESSION['user']['status']!='S')
                             {
                                 echo '<li class="sidebar__list-item"><a href="adminpage.php" class="sidebar__list-link"class="sidebar__list-link" > страница для администратора</a></li>';
                             }
@@ -75,7 +72,7 @@ session_start();
                             </div>
                             <div class="info__items">
                                 <img src="images/school.svg" alt="" class="info__items-img">
-                                <p class="info__items-text">Преподователи
+                                <p class="info__items-text">Преподaватели
                                     с огромным
                                     опытом </p>
                             </div>
@@ -88,26 +85,22 @@ session_start();
                     </section>
                     <section class="search">
                         <?php
-                        function getVideo()
-                        {
-                            $pdo = new PDO("mysql:host = localhost;dbname=lang", "root", "root");
-                            $statement = $pdo->prepare("SELECT * FROM videos");
-                            $statement->execute();
-                            $videos = $statement->fetchAll(PDO::FETCH_ASSOC);
-                            return $videos;
-                        }
-                            $videos = getVideo();
+                            require_once 'connect/loadvideo.php';
+                            $videos = getVideo1();
                             foreach (array_reverse($videos) as $video ):
                             ?>
-                            <div class="search__item">
-                            <h2 class="search__text" ><?= $video['title']?></h2>
-                            <p class="search__text2" ><?= $video['description'] ?></p>
-                            <video controls="controls" src="<?= $video['video']?>" width="720" height="360">
-                            </div>
+                            <form method="GET" action="videopage.php">
+                                <div class="search__item">
+                                    <input type="hidden" name="id" value="<?=$video['id']?>">
+                                    <button class="button__video" type="submit" ><h2 class="search__text"><?= $video['title']?></h2></a>
+                                    <p class="search__text2" ><?= $video['author'] ?></p>
+                                    <p class="search__text2" ><?= $video['description'] ?></p>
+                                    <video controls="controls" src="<?= $video['video']?>" width="720" height="360">
+                                </div>
+                            </form>
                             <?php
-                            endforeach;
+                                endforeach;
                             ?>
-                            
                     </section>
                 </div>
             </div>

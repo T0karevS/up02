@@ -1,26 +1,28 @@
 <?php
-session_start();
-if($_SESSION['user']['status']!='S' && $_SESSION['user']['nickname']!='admin')
-        {            
-            header('location: ../index.php');
-        }
+    session_start();
+if (!$_SESSION['user'])
+{
+    header('location: registration.php');
+}
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Russo+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mypage.css">
+
     <title>Document</title>
 </head>
 <body>
-<header class="header">
+<div class="wrapper">
+        <header class="header">
             <a href="index.php" class="logo">
                 <img src="images/logo.svg" alt="" class="logo__img">
             </a>
@@ -31,6 +33,7 @@ if($_SESSION['user']['status']!='S' && $_SESSION['user']['nickname']!='admin')
             <a href="mypage.php" class="header__registration">
                 <img src="images/avatar.svg" alt="" class="header__registration">
             </a>
+            
         </header>
         <main class="main">
             <div class="main__inner">
@@ -57,47 +60,35 @@ if($_SESSION['user']['status']!='S' && $_SESSION['user']['nickname']!='admin')
                         }
                             ?>
                     </ul>
+                  
                 </sidebar>
-<form method="post" class="form" enctype="multipart/form-data">
-    <div class="video__adm">
-        <?php   
+                <section class="page">
+                    <div class="page__item">
+                        <h2 class="name-1"> <?= $_SESSION['user']['nickname'] ?></h2>
+                        <a href="upload.php" class="page__load">Загрузить видео</a>
+                    </div>
+                    <div class="page__item-inner">
+                        <h1 class="page__item-inner-title">Мои Видео</h1>
+                        <?php
         require_once 'connect/loadvideo.php';
-            $videos = getVideo();
-                     
-            foreach ($videos as $video ):
-        ?>            
-            <div class="search__item">   
-            <?php 
-            ?>     
-            <button class="button__video" type="submit" ><h2 class="search__text"><?= $video['title']?></h2></a>
-            <p class="search__text2"><?= $video['description'] ?></p>
-            <video controls="controls" src="<?= $video['video']?>" width="1280" height="720"></video><br>
-            <button type="submit" class="button1" name="<?= $video['id']; ?>">Забанить видео</button>
-            <button type="submit" class="button1" name="<?=  'a'.$video['id']; ?>">Выложить видео</button>
-            <?php 
-            $id=$video['id'];
-            $id2='a'.$id;
-            if( isset($_POST[ $id ]) )
-            {
-                $id=$video['id'];
-                require_once 'connect/ban.php';
-            }  
-            if( isset($_POST[ $id2 ]) )
-            {
-                $id=$video['id'];
-                require_once 'connect/ban2.php';
-            }  
-            ?>
-            </div>
-        <?php
-            endforeach;
+        $videos = getVideo2();
+        foreach (array_reverse($videos) as $video ):
         ?>
-    </div>
-</form>
-        <script>
-        if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-        }
-        </script>
+        <form method="GET" action="videopage.php">
+                <div class="search__item">
+                <input type="hidden" name="id" value="<?=$video['id']?>">
+                <button class="button__video" type="submit" ><h2 class="search__text"><?= $video['title']?></h2></a>
+                <p class="search__text2" ><?= $video['author'] ?></p>
+                <p class="search__text2" ><?= $video['description'] ?></p>
+                <video controls="controls" src="<?= $video['video']?>" width="1024" height="576">
+             </div>
+           </form>
+        <?php
+        endforeach;
+        ?>
+                    </div>
+                </section> 
+    
+        
 </body>
 </html>

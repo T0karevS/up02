@@ -5,10 +5,10 @@ $nickname = $_POST['nickname'];
 $email = $_POST['email'];
 $password = MD5($_POST['password']);
 $password_c = MD5($_POST['password_c']);
-$status = 0; 
-if($_POST['nickname'] == 'admin' || $_POST['password'] == '111')
+$status = 'S'; 
+if($_POST['nickname'] == 'admin' && $_POST['password'] == '111')
 {
-    $status = 1;
+    $status = "A";
 }
 if($password===$password_c)
 {
